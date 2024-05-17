@@ -41,3 +41,74 @@ def print_data():
     with open('data_second_variant.csv', 'r', encoding = 'utf-8') as f:
         data_second = f.readlines()
         print(*data_second)
+        
+        
+def remove_data():
+    print('Из какого файла произвести удаление? \n 1 - справочник_1 \n 2 - справочник_2')
+    var = int(input(f'Выберите вариант: '))
+    
+    while var != 1 and var != 2:
+        print("Неправильный ввод")
+        var = int(input("Выберите вариант: "))
+        
+    if var == 1:
+        with open('data_first_variant.csv', 'r', encoding="utf-8") as f:
+            a = input('Введите Имя или Фамилию для удаления: ')
+            lines = f.readlines()
+        with open('data_first_variant.csv', 'w', encoding="utf-8") as f:
+            for line in lines:
+                if a in line:
+                    print("Данные удалены")
+                else:
+                    print(line)    
+                    f.write(line)
+    elif var == 2:
+        with open('data_second_variant.csv', 'r', encoding="utf-8") as f:
+            a = input('Введите Имя или Фамилию для удаления: ')
+            lines = f.readlines()
+        with open('data_second_variant.csv', 'w', encoding="utf-8") as f:
+            for line in lines:
+                words = line.split(';') 
+                updated_line = ';'.join([word for word in words if word != a])
+                f.write(updated_line) 
+        print('Данные удалены')
+
+                    
+                    
+def edit_data():
+    print('В каком файле произвести изменения? \n 1 - справочник_1 \n 2 - справочник_2')
+    var = int(input(f'Выберите вариант: '))
+    
+    while var != 1 and var != 2:
+        print("Неправильный ввод")
+        var = int(input("Выберите вариант: "))
+        
+    if var ==1:    
+        search_word = input('Введите имя или фамилию для поиска: ')
+        replace_word = input('Введите новое значение: ')
+    
+        with open('data_first_variant.csv', 'r', encoding="utf-8") as f:
+            lines = f.readlines()
+    
+        with open('data_first_variant.csv', 'w', encoding="utf-8") as f:
+            for line in lines:
+                if search_word in line:
+                    updated_line = line.replace(search_word, replace_word)
+                    f.write(updated_line)
+                else:
+                    f.write(line)   
+        print("Замена выполнена успешно")
+    
+    elif var == 2:
+        with open('data_second_variant.csv', 'r', encoding="utf-8") as f:
+                search_word = input('Введите имя или фамилию для замены: ')
+                replacement = input('Введите новое имя или фамилию: ')
+                lines = f.readlines()
+    
+        with open('data_second_variant.csv', 'w', encoding="utf-8") as f:
+            for line in lines:
+                words = line.split(';') 
+                updated_words = [word if word != search_word else replacement for word in words]
+                updated_line = ';'.join(updated_words) 
+                f.write(updated_line)
+        print("Замена выполнена успешно")
